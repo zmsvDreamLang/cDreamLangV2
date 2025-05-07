@@ -19,7 +19,6 @@ namespace cdream {
         
         INT_LITERAL,
         FLOAT_LITERAL,
-        LATEX_EXPRESSION,
         
         IDENTIFIER,
         
@@ -66,7 +65,6 @@ namespace cdream {
                     case TokenType::INT_LITERAL: typeStr = "INT_LITERAL"; break;
                     case TokenType::FLOAT_LITERAL: typeStr = "FLOAT_LITERAL"; break;
                     case TokenType::STRING_TYPE: typeStr = "STRING_TYPE"; break;
-                    case TokenType::LATEX_EXPRESSION: typeStr = "LATEX_EXPRESSION"; break;
                     case TokenType::IDENTIFIER: typeStr = "IDENTIFIER"; break;
                     case TokenType::LEFT_PAREN: typeStr = "LEFT_PAREN"; break;
                     case TokenType::RIGHT_PAREN: typeStr = "RIGHT_PAREN"; break;

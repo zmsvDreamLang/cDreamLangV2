@@ -45,7 +45,6 @@ int main(int argc, char* argv[]) {
                 case cdream::TokenType::BOOL_TYPE: typeStr = "BOOL_TYPE"; break;
                 case cdream::TokenType::INT_LITERAL: typeStr = "INT_LITERAL"; break;
                 case cdream::TokenType::FLOAT_LITERAL: typeStr = "FLOAT_LITERAL"; break;
-                case cdream::TokenType::LATEX_EXPRESSION: typeStr = "LATEX_EXPRESSION"; break;
                 case cdream::TokenType::IDENTIFIER: typeStr = "IDENTIFIER"; break;
                 case cdream::TokenType::LEFT_PAREN: typeStr = "LEFT_PAREN"; break;
                 case cdream::TokenType::RIGHT_PAREN: typeStr = "RIGHT_PAREN"; break;

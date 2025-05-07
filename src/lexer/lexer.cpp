@@ -69,16 +69,7 @@ namespace cdream {
             case '=': return create_token(TokenType::EQUAL);
             
             case '@':
-                if (peek() == 'L' && peek(1) == 'a' && peek(2) == 't' && 
-                    peek(3) == 'e' && peek(4) == 'x') {
-                    advance(); // L
-                    advance(); // a
-                    advance(); // t
-                    advance(); // e
-                    advance(); // x
-                    return scan_latex_expression();
-                }
-                throw std::runtime_error("Unexpected character: @");
+                // to be implemented
                 
             default:
                 if (isdigit(c)) {
@@ -191,27 +182,6 @@ namespace cdream {
         }
         
         return Token(type, text, 
-                    current_line_, current_column_ - (current_position_ - start_position_));
-    }
-
-    Token Lexer::scan_latex_expression() {
-        if (peek() != '"') {
-            throw std::runtime_error("Expected '\"' after @Latex");
-        }
-        advance();
-        
-        std::string latex_content;
-        while (peek() != '"' && !is_at_end()) {
-            latex_content += advance();
-        }
-        
-        if (is_at_end()) {
-            throw std::runtime_error("Unterminated LaTeX expression");
-        }
-        
-        advance(); // Consume the closing quote
-        
-        return Token(TokenType::LATEX_EXPRESSION, latex_content,
                     current_line_, current_column_ - (current_position_ - start_position_));
     }
 

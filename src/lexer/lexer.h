@@ -19,7 +19,6 @@ namespace cdream {
             Token scan_documentation();
             Token scan_number();
             Token scan_identifier();
-            Token scan_latex_expression();
             
             char advance();
             bool match(char expected);
