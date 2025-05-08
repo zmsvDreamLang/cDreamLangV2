@@ -1,7 +1,7 @@
 CXX = clang++
 CXXFLAGS = -std=c++17 -Wall -Werror -Isrc
 SRC_DIR = src
-TARGET = test_lexer
+TARGET = main
 
 ifeq ($(OS),Windows_NT)
     PLATFORM = windows
@@ -39,8 +39,8 @@ all: $(BUILD_DIR)/$(TARGET)
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)/$(TARGET): $(SRC_DIR)/main.cpp $(SRC_DIR)/lexer/lexer.cpp $(SRC_DIR)/lexer/token.h $(SRC_DIR)/lexer/lexer.h | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $(SRC_DIR)/main.cpp $(SRC_DIR)/lexer/lexer.cpp
+$(BUILD_DIR)/$(TARGET): $(SRC_DIR)/main.cpp $(SRC_DIR)/lexer/lexer.cpp $(SRC_DIR)/lexer/token.h $(SRC_DIR)/lexer/lexer.h $(SRC_DIR)/parser/parser.cpp $(SRC_DIR)/parser/parser.h $(SRC_DIR)/ast/ast.cpp $(SRC_DIR)/ast/ast.h | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -o $@ $(SRC_DIR)/main.cpp $(SRC_DIR)/lexer/lexer.cpp $(SRC_DIR)/parser/parser.cpp $(SRC_DIR)/ast/ast.cpp
 
 clean:
 	rm -f $(BUILD_DIR)/$(TARGET)

@@ -5,6 +5,8 @@
 #include <chrono>
 #include <iomanip>
 #include "lexer/lexer.h"
+#include "parser/parser.h"
+#include "ast/ast.h"
 
 std::string read_file(const std::string& path) {
     std::ifstream file(path);
@@ -67,7 +69,19 @@ int main(int argc, char* argv[]) {
             std::cout << "Line " << token.line << ", Col " << token.column 
                       << ": " << typeStr << " '" << token.lexeme << "'" << std::endl;
         }
-    
+        
+        // 语法分析，构建AST
+        std::cout << "\nParsing and building AST..." << std::endl;
+        std::cout << "====================" << std::endl;
+        
+        cdream::Parser parser(tokens);
+        std::unique_ptr<cdream::Program> program = parser.parse();
+        
+        // 输出AST
+        std::cout << "AST Structure:" << std::endl;
+        std::cout << "====================" << std::endl;
+        program->print(std::cout);
+        std::cout << "====================" << std::endl;
         
         return 0;
     } catch (const std::exception& e) {

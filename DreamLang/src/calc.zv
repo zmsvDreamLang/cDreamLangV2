@@ -9,6 +9,9 @@ var e = 0b10111
 
 var f01c = 123.234
 
+val f,g = 1,2,3
+
+val h:int, i:float = 8,9.71
 
 var sum = a + b // int:5
 var dif = a - b // int:1
