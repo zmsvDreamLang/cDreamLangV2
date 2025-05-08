@@ -67,12 +67,12 @@ namespace cdream {
                 }
                 
             case '=': return create_token(TokenType::EQUAL);
-            
-            case '@':
-                // to be implemented
+        
                 
             default:
-                if (isdigit(c)) {
+                if (is_digit(c)) {
+                    current_position_--;
+                    current_column_--;
                     return scan_number();
                 } else if (isalpha(c) || c == '_') {
                     return scan_identifier();
@@ -132,24 +132,85 @@ namespace cdream {
                     current_line_, current_column_ - (current_position_ - start_position_));
     }
 
+    bool Lexer::is_digit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    bool Lexer::is_hex_digit(char c) {
+        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+    }
+
+    bool Lexer::is_octal_digit(char c) {
+        return c >= '0' && c <= '7';
+    }
+    bool Lexer::is_binary_digit(char c) {
+        return c == '0' || c == '1';
+    }
+
     Token Lexer::scan_number() {
-        while (isdigit(peek())) {
-            advance();
-        }
+        start_position_ = current_position_;
+        char first = advance();
         
-        if (peek() == '.' && isdigit(peek(1))) {
-            advance();
-            
-            while (isdigit(peek())) {
+        if (first == '0') {
+            if (peek() == 'x' || peek() == 'X') {
+                advance();
+                if (!is_hex_digit(peek())) {
+                    throw std::runtime_error("Invalid hexadecimal number: expected at least one hex digit after '0x'");
+                }
+                while (is_hex_digit(peek())) {
+                    advance();
+                }
+            } else if (peek() == 'b' || peek() == 'B') {
+                advance();
+                if (!is_binary_digit(peek())) {
+                    throw std::runtime_error("Invalid binary number: expected binary digit after '0b'");
+                }
+                while (is_binary_digit(peek())) {
+                    advance();
+                }
+            } else if (peek() == 'o' || peek() == 'O') {
+                advance();
+                if (!is_octal_digit(peek())) {
+                    throw std::runtime_error("Invalid octal number: expected octal digit after '0o'");
+                }
+                while (is_octal_digit(peek())) {
+                    advance();
+                }
+            } else {
+                while (is_digit(peek())) {
+                    advance();
+                }
+                
+                if (peek() == '.' && is_digit(peek(1))) {
+                    advance();
+
+                    while (is_digit(peek())) {
+                        advance();
+                    }
+                    
+                    return Token(TokenType::FLOAT_LITERAL, 
+                                source_.substr(start_position_, current_position_ - start_position_),
+                                current_line_, current_column_ - (current_position_ - start_position_));
+                }
+            }
+        } else {
+            while (is_digit(peek())) {
                 advance();
             }
-            
-            return Token(TokenType::FLOAT_LITERAL, 
-                        source_.substr(start_position_, current_position_ - start_position_),
-                        current_line_, current_column_ - (current_position_ - start_position_));
+            if (peek() == '.' && is_digit(peek(1))) {
+                advance();
+
+                while (is_digit(peek())) {
+                    advance();
+                }
+                
+                return Token(TokenType::FLOAT_LITERAL, 
+                            source_.substr(start_position_, current_position_ - start_position_),
+                            current_line_, current_column_ - (current_position_ - start_position_));
+            }
         }
-        
-        return Token(TokenType::INT_LITERAL, 
+
+        return Token(TokenType::INT_LITERAL,
                     source_.substr(start_position_, current_position_ - start_position_),
                     current_line_, current_column_ - (current_position_ - start_position_));
     }
@@ -218,4 +279,4 @@ namespace cdream {
                     current_line_, current_column_ - 1);
     }
 
-}  // namespace cdream
+}

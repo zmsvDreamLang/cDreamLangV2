@@ -3,6 +3,13 @@
 var a: int = 3
 var b = 2
 
+var c = 0x21A
+var d = 0o77
+var e = 0b10111
+
+var f01c = 123.234
+
+
 var sum = a + b // int:5
 var dif = a - b // int:1
 var pro = a * b // int:6

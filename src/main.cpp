@@ -67,30 +67,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Line " << token.line << ", Col " << token.column 
                       << ": " << typeStr << " '" << token.lexeme << "'" << std::endl;
         }
-        
-        // 性能测试
-        int iterations = 1000000;
-        std::cout << "\nPerformance Test:" << std::endl;
-        std::cout << "====================" << std::endl;
-        std::cout << "Tokenize for " << iterations << " iterations." << std::endl;
-        
-        auto start = std::chrono::high_resolution_clock::now();
-        for (int i = 0; i < iterations; ++i) {
-            cdream::Lexer lexer(source);
-            std::vector<cdream::Token> tokens = lexer.tokenize();
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        
-        std::chrono::duration<double> duration = end - start;
-        double tokensPerSecond = (tokens.size() * iterations) / duration.count();
-        double msPerIteration = (duration.count() * 1000.0) / iterations;
-        
-        std::cout << "Tokenization completed in " << duration.count() << " seconds." << std::endl;
-        std::cout << "Average time per iteration: " << std::fixed << std::setprecision(6) 
-                  << msPerIteration << " ms" << std::endl;
-        std::cout << "Tokens processed per second: " << std::fixed << std::setprecision(2) 
-                  << tokensPerSecond << std::endl;
-        std::cout << "====================" << std::endl;
+    
         
         return 0;
     } catch (const std::exception& e) {

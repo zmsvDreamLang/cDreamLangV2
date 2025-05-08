@@ -22,6 +22,10 @@ namespace cdream {
             
             char advance();
             bool match(char expected);
+            bool is_digit(char c);
+            bool is_hex_digit(char c);
+            bool is_octal_digit(char c);
+            bool is_binary_digit(char c);
             char peek(int offset = 0) const;
             bool is_at_end() const;
             bool is_keyword(const std::string& identifier);
