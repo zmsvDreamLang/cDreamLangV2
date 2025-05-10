@@ -40,7 +40,6 @@ namespace cdream {
         
         TokenType data_type = TokenType::EOF_TOKEN;
         if (match(TokenType::COLON)) {
-            // Parse type annotation
             if (match(TokenType::INT_TYPE)) {
                 data_type = TokenType::INT_TYPE;
             } else if (match(TokenType::FLOAT_TYPE)) {
